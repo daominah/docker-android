@@ -98,7 +98,7 @@ ARG IMG_TYPE=google_apis_playstore
 ARG BROWSER=android
 ARG CHROME_DRIVER=2.40
 ARG GOOGLE_PLAY_SERVICE=23.12.13
-ARG GOOGLE_PLAY_STORE=35.1.11
+ARG GOOGLE_PLAY_STORE=35.2.17
 ARG APP_RELEASE_VERSION=1.5-p0
 ENV ANDROID_VERSION=$ANDROID_VERSION \
     API_LEVEL=$API_LEVEL \
@@ -128,7 +128,7 @@ RUN wget -nv -O chrome.zip "https://chromedriver.storage.googleapis.com/${CHROME
 # Download Google Play Services APK and Play Store from apklinker
 #================================================================
 RUN wget -nv -O google_play_services.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/64304544b4494/com.google.android.gms_23.12.13-040700-520023152_231213022_MinAPI23_(x86)(nodpi)_apklinker.com.apk"
-RUN wget -nv -O google_play_store.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/6425b8f7d3e97/com.android.vending_35.1.11-21-0-PR-519239488_83511110_MinAPI21_(arm64-v8a,armeabi-v7a,x86,x86_64)(nodpi)_apklinker.com.apk"
+RUN wget -nv -O google_play_store.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/643274c038256/com.android.vending_35.2.17-21-0-PR-521597291_83521710_MinAPI21_(arm64-v8a,armeabi-v7a,x86,x86_64)(nodpi)_apklinker.com.apk"
 
 #================================================
 # noVNC Default Configurations

@@ -20,4 +20,6 @@ In this fork, I try to install Google Play Store.
 
 * [Google Play Store missing issue on budtmo/docker-android](https://github.com/budtmo/docker-android/issues/130)
 * [Android version and API Level](https://developer.android.com/guide/topics/manifest/uses-sdk-element)
-* 
+* Download Android SDK [command line tools](https://developer.android.com/studio/index.html#command-line-tools-only) only
+  (include [sdkmanager](https://developer.android.com/tools/sdkmanager)).  
+  Fix [sdkmanager could not determine SDK root error](https://stackoverflow.com/a/67413427/4097963)

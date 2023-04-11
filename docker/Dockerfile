@@ -92,8 +92,8 @@ RUN  wget -nv -O noVNC.zip "https://github.com/kanaka/noVNC/archive/${NOVNC_SHA}
 #======================
 ARG ANDROID_VERSION=10.0
 ARG API_LEVEL=29
-ARG PROCESSOR=x86
-ARG SYS_IMG=x86
+ARG PROCESSOR=x86_64
+ARG SYS_IMG=x86_64
 ARG IMG_TYPE=google_apis_playstore
 ARG BROWSER=android
 ARG CHROME_DRIVER=2.40

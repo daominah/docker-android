@@ -13,6 +13,7 @@ function stop() {
 }
 
 function auto_record() {
+    export AUTO_RECORD=false
     echo "Auto record: $AUTO_RECORD"
     sleep 6
 

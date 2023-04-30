@@ -194,7 +194,7 @@ HEALTHCHECK --interval=2s --timeout=40s --retries=1 \
 
 RUN ln -s ${ANDROID_HOME}/emulator/emulator /usr/bin/
 
-RUN echo "cd /var/log/supervisor/" >> /root/.bash_history
 COPY daominah_bashrc /root/.bashrc
+COPY daominah_bash_history /root/.bash_history
 
 CMD /usr/bin/supervisord --configuration /root/supervisord.conf

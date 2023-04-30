@@ -1,0 +1,2 @@
+adb shell dumpsys window displays | grep -E 'mFocusedApp|mCurrentFocus'
+cd /var/log/supervisor/

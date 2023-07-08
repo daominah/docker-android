@@ -1,2 +1,5 @@
 adb shell dumpsys window displays | grep -E 'mFocusedApp|mCurrentFocus'
 cd /var/log/supervisor/
+adb shell input keyevent KEYCODE_BACK
+adb shell input keyevent KEYCODE_HOME
+adb shell input keyevent KEYCODE_APP_SWITCH

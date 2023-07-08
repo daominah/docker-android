@@ -1,25 +1,15 @@
-#  Android, Appium in Docker
+# Android, Appium in Docker
 
 In this fork, I try to install Google Play Store.
 
 ### Quick start
 
 * [s0_build_img.sh](s0_build_img.sh) to build Docker image.
-* [s1_run_ctn.sh](s1_run_ctn.sh) to run the Android emulator. 
+* [s1_run_ctn.sh](s1_run_ctn.sh) to run the Android emulator.
 
   ````bash
-  export dockerImgTag=daominah/docker-android
-  export dockerCtnName=android
-  docker run --privileged -d \
-    -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 \
-    -e DEVICE="Samsung Galaxy S6" -e APPIUM=true \
-    --name ${dockerCtnName} ${dockerImgTag}
-  
-  # one line simple command:
-  docker run --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 -e 'DEVICE=Samsung Galaxy S9' -e APPIUM=true --name android daominah/docker-android
-  
   # run with mount APK dir add `-v ${hostDir}:/root/tmp`
-  docker run -v /root/apk_installer:/root/tmp --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 -e 'DEVICE=Samsung Galaxy S9' -e APPIUM=true --name android daominah/docker-android
+  docker rm -f android-container; docker run -v /root/apk_installer:/root/tmp --privileged -d -p 6080:6080 -p 5554:5554 -p 5555:5555 -p 4723:4723 -e 'DEVICE=Samsung Galaxy S6' -e APPIUM=true --name android-container daominah/docker-android11
   ````
 
 ### Reference

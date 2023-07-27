@@ -197,4 +197,6 @@ RUN ln -s ${ANDROID_HOME}/emulator/emulator /usr/bin/
 COPY daominah_bashrc /root/.bashrc
 COPY daominah_bash_history /root/.bash_history
 
+RUN apt-get install -qy procps net-tools telnet iputils-ping vim gettext-base curl
+
 CMD /usr/bin/supervisord --configuration /root/supervisord.conf

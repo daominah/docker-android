@@ -25,10 +25,14 @@ function change_language_if_needed() {
 
 function install_google_play () {
   wait_emulator_to_be_ready
-  echo "Google Play Service will be installed"
-  adb install -r "/root/google_play_services.apk"
-  echo "Google Play Store will be installed"
-  adb install -r "/root/google_play_store.apk"
+  if [[ $IMG_TYPE == *"playstore"* ]]; then
+    echo "Google Play Service will be installed"
+    adb install -r "/root/google_play_services.apk"
+    echo "Google Play Store will be installed"
+    adb install -r "/root/google_play_store.apk"
+  else
+    echo "not install Google Play because the image does not support"
+  fi
 }
 
 function enable_proxy_if_needed () {

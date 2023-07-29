@@ -51,6 +51,10 @@ WORKDIR /root
 # bridge-utils
 #==================
 ADD docker/configs/x11vnc.pref /etc/apt/preferences.d/
+
+RUN apt-get update
+RUN apt-get install -qy procps net-tools telnet iputils-ping vim gettext-base curl
+
 RUN apt-get -qqy update && apt-get -qqy install --no-install-recommends \
     xterm \
     supervisor \
@@ -94,12 +98,17 @@ ARG ANDROID_VERSION=11.0
 ARG API_LEVEL=30
 ARG PROCESSOR=x86_64
 ARG SYS_IMG=x86_64
-ARG IMG_TYPE=google_apis_playstore
+
+# "playstore" image cannot run adbd root
+# ARG IMG_TYPE=google_apis_playstore
+ARG IMG_TYPE=google_apis
+
 ARG BROWSER=android
 ARG CHROME_DRIVER=2.40
 ARG GOOGLE_PLAY_SERVICE=23.12.13
 ARG GOOGLE_PLAY_STORE=35.2.17
 ARG APP_RELEASE_VERSION=1.5-p0
+
 ENV ANDROID_VERSION=$ANDROID_VERSION \
     API_LEVEL=$API_LEVEL \
     PROCESSOR=$PROCESSOR \
@@ -197,6 +206,5 @@ RUN ln -s ${ANDROID_HOME}/emulator/emulator /usr/bin/
 COPY daominah_bashrc /root/.bashrc
 COPY daominah_bash_history /root/.bash_history
 
-RUN apt-get install -qy procps net-tools telnet iputils-ping vim gettext-base curl
 
 CMD /usr/bin/supervisord --configuration /root/supervisord.conf

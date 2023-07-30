@@ -209,8 +209,9 @@ def run():
     """Run app."""
     device = os.getenv('DEVICE', 'Nexus 5')
     logger.info('Device: {device}'.format(device=device))
-    custom_args=os.getenv('EMULATOR_ARGS', '')
-    logger.info('Custom Args: {custom_args}'.format(custom_args=custom_args))
+    custom_args = os.getenv('EMULATOR_ARGS', '')
+    gpuOption = os.getenv('EMULATOR_GPU', '')
+    logger.info('env EMULATOR_ARGS: %s, EMULATOR_GPU: %s', custom_args, gpuOption)
 
     avd_name = os.getenv('AVD_NAME', '{device}_{version}'.format(device=device.replace(' ', '_').lower(), version=ANDROID_VERSION))
     logger.info('AVD name: {avd}'.format(avd=avd_name))
@@ -226,10 +227,12 @@ def run():
 
     if is_first_run:
         logger.info('Emulator was not previously initialized. Preparing a new one...')
-        cmd = 'emulator @{name} -gpu swiftshader_indirect -accel on -wipe-data -writable-system -verbose {custom_args}'.format(name=avd_name, custom_args=custom_args)
+        cmd = 'emulator @{name} -gpu {gpuOption} -accel on -wipe-data -writable-system -verbose {custom_args}'.format(
+            name=avd_name, custom_args=custom_args, gpuOption=gpuOption)
     else:
         logger.info('Using previously initialized AVD...')
-        cmd = 'emulator @{name} -gpu swiftshader_indirect -accel on -verbose -writable-system {custom_args}'.format(name=avd_name, custom_args=custom_args)
+        cmd = 'emulator @{name} -gpu {gpuOption} -accel on -verbose -writable-system {custom_args}'.format(
+            name=avd_name, custom_args=custom_args, gpuOption=gpuOption)
 
     appium = convert_str_to_bool(str(os.getenv('APPIUM', False)))
     if appium:

@@ -196,6 +196,17 @@ COPY devices ${ANDROID_HOME}/devices
 #===================
 COPY src /root/src
 COPY supervisord.conf /root/
+
+# https://developer.android.com/studio/run/emulator-acceleration#command-gpu:
+# auto, host, swiftshader_indirect, angle_indirect, guest.
+ENV EMULATOR_GPU=auto
+# https://developer.android.com/studio/run/emulator-networking.html#proxy:
+# go to menu `Extended controls`: `Settings`: `Proxy`, alternatively, you can
+# configure a proxy from the command line with the -http-proxy <proxy> option
+# when starting the emulator,
+# example docker run: -e 'EMULATOR_ARGS=-http-proxy http://127.0.0.1:24001'
+ENV EMULATOR_ARGS=
+
 RUN chmod -R +x /root/src && chmod +x /root/supervisord.conf
 
 HEALTHCHECK --interval=2s --timeout=40s --retries=1 \

@@ -94,20 +94,62 @@ RUN  wget -nv -O noVNC.zip "https://github.com/kanaka/noVNC/archive/${NOVNC_SHA}
 #======================
 # Install SDK packages
 #======================
-ARG ANDROID_VERSION=11.0
-ARG API_LEVEL=30
-ARG PROCESSOR=x86_64
-ARG SYS_IMG=x86_64
-
-# "playstore" image cannot run adbd root
-# ARG IMG_TYPE=google_apis_playstore
-ARG IMG_TYPE=google_apis
 
 ARG BROWSER=android
 ARG CHROME_DRIVER=2.40
 ARG GOOGLE_PLAY_SERVICE=23.12.13
 ARG GOOGLE_PLAY_STORE=35.2.17
 ARG APP_RELEASE_VERSION=1.5-p0
+# PROCESSOR seems like unused
+ARG PROCESSOR=x86_64
+
+#==============================================
+# Download proper version of chromedriver
+# to be able to use Chrome browser in emulator
+#==============================================
+RUN wget -nv -O chrome.zip "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER}/chromedriver_linux64.zip" \
+ && unzip -x chrome.zip \
+ && rm chrome.zip
+
+#================================================================
+# Download Google Play Services APK and Play Store from apklinker
+#================================================================
+RUN wget -nv -O google_play_services.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/64304544b4494/com.google.android.gms_23.12.13-040700-520023152_231213022_MinAPI23_(x86)(nodpi)_apklinker.com.apk"
+RUN wget -nv -O google_play_store.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/643274c038256/com.android.vending_35.2.17-21-0-PR-521597291_83521710_MinAPI21_(arm64-v8a,armeabi-v7a,x86,x86_64)(nodpi)_apklinker.com.apk"
+
+
+#===============================================================================
+#===============================================================================
+# The following build arg pick emulator system image, some notes:
+# * ARM64 emulation on a x86_64 host currently is only possible up to API level 27
+#   (https://stackoverflow.com/a/74819011/4097963).
+# * My test phone Samsung A02S has Android 12.
+# * They say Android 11 can run ARM apk but many apps still crash.
+#   (https://developer.android.com/studio/releases/emulator#30-0-0)
+
+ARG ANDROID_VERSION=6.0
+ARG API_LEVEL=23
+#ARG ANDROID_VERSION=8.1
+#ARG API_LEVEL=27
+#ARG ANDROID_VERSION=11.0
+#ARG API_LEVEL=30
+#ARG ANDROID_VERSION=12.0
+#ARG API_LEVEL=31
+#ARG ANDROID_VERSION=13.0
+#ARG API_LEVEL=33
+
+#ARG SYS_IMG=x86
+#ARG SYS_IMG=x86_64
+ARG SYS_IMG=arm64-v8a
+
+# "playstore" image cannot run adbd root
+# some API_LEVEL, SYS_IMG do not have playstore
+ARG IMG_TYPE=google_apis
+#ARG IMG_TYPE=google_apis_playstore
+
+#===============================================================================
+#===============================================================================
+
 
 ENV ANDROID_VERSION=$ANDROID_VERSION \
     API_LEVEL=$API_LEVEL \
@@ -124,20 +166,6 @@ ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
 RUN yes | sdkmanager --licenses && \
     sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
-
-#==============================================
-# Download proper version of chromedriver
-# to be able to use Chrome browser in emulator
-#==============================================
-RUN wget -nv -O chrome.zip "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER}/chromedriver_linux64.zip" \
- && unzip -x chrome.zip \
- && rm chrome.zip
-
-#================================================================
-# Download Google Play Services APK and Play Store from apklinker
-#================================================================
-RUN wget -nv -O google_play_services.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/64304544b4494/com.google.android.gms_23.12.13-040700-520023152_231213022_MinAPI23_(x86)(nodpi)_apklinker.com.apk"
-RUN wget -nv -O google_play_store.apk "https://www.apklinker.com/wp-content/uploads/uploaded_apk/643274c038256/com.android.vending_35.2.17-21-0-PR-521597291_83521710_MinAPI21_(arm64-v8a,armeabi-v7a,x86,x86_64)(nodpi)_apklinker.com.apk"
 
 #================================================
 # noVNC Default Configurations

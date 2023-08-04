@@ -5,7 +5,6 @@ import logging
 import os
 import re
 import subprocess
-import uuid
 
 from src import CHROME_DRIVER, CONFIG_FILE, ROOT
 from src import log
@@ -77,10 +76,9 @@ IMG_TYPE = get_or_raise('IMG_TYPE')
 
 logger.info('Android version: {version} \n'
             'API level: {level} \n'
-            'Processor: {processor} \n'
             'System image: {img} \n'
-            'Image type: {img_type}'.format(version=ANDROID_VERSION, level=API_LEVEL, processor=PROCESSOR,
-                                            img=SYS_IMG, img_type=IMG_TYPE))
+            'Image type: {img_type}'.format(
+    version=ANDROID_VERSION, level=API_LEVEL, img=SYS_IMG, img_type=IMG_TYPE))
 
 
 def prepare_avd(device: str, avd_name: str, dp_size: str):

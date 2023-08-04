@@ -1,8 +1,8 @@
 set -x
 
-export dockerImgTag=daominah/docker-android
+export dockerImgTag=daominah/android-30_google_apis_playstore_x86_64
 export dockerCtnName=android-container
-#export optionMount='-v /media/tungdt/LinuxData/work/TuanNghiep/apk_installer:/root/tmp'
+export optionMount='-v /media/tungdt/LinuxData/work/TuanNghiep/apk_installer:/root/tmp'
 
 docker rm -f ${dockerCtnName}
 docker run --privileged -d $optionMount \

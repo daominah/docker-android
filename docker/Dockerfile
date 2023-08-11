@@ -54,6 +54,7 @@ ADD docker/configs/x11vnc.pref /etc/apt/preferences.d/
 
 RUN apt-get update
 RUN apt-get install -qy procps net-tools telnet iputils-ping vim gettext-base curl
+RUN apt-get install -qy locate
 
 RUN apt-get -qqy update && apt-get -qqy install --no-install-recommends \
     xterm \
@@ -127,20 +128,20 @@ RUN wget -nv -O google_play_store.apk "https://www.apklinker.com/wp-content/uplo
 # * They say Android 11 can run ARM apk but many apps still crash.
 #   (https://developer.android.com/studio/releases/emulator#30-0-0)
 
-ARG ANDROID_VERSION=6.0
-ARG API_LEVEL=23
+#ARG ANDROID_VERSION=6.0
+#ARG API_LEVEL=23
 #ARG ANDROID_VERSION=8.1
 #ARG API_LEVEL=27
-#ARG ANDROID_VERSION=11.0
-#ARG API_LEVEL=30
+ARG ANDROID_VERSION=11.0
+ARG API_LEVEL=30
 #ARG ANDROID_VERSION=12.0
 #ARG API_LEVEL=31
 #ARG ANDROID_VERSION=13.0
 #ARG API_LEVEL=33
 
 #ARG SYS_IMG=x86
-#ARG SYS_IMG=x86_64
-ARG SYS_IMG=arm64-v8a
+ARG SYS_IMG=x86_64
+#ARG SYS_IMG=arm64-v8a
 
 # "playstore" image cannot run adbd root
 # some API_LEVEL, SYS_IMG do not have playstore
@@ -166,6 +167,16 @@ ENV PATH ${PATH}:${ANDROID_HOME}/build-tools
 
 RUN yes | sdkmanager --licenses && \
     sdkmanager "platforms;android-${API_LEVEL}" "system-images;android-${API_LEVEL};${IMG_TYPE};${SYS_IMG}" "emulator"
+
+# try to solve Vulkan error:
+# cannot add `/opt/android/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so`
+# /opt/android/emulator/lib/advancedFeatures.ini
+# /opt/android/emulator/lib/advancedFeaturesCanary.ini
+
+RUN ln -s /opt/android/emulator/lib64 /opt/android/emulator/qemu/linux-x86_64/lib64
+ENV advancedFeatures=/opt/android/system-images/android-$API_LEVEL/$IMG_TYPE/$SYS_IMG/advancedFeatures.ini
+RUN cat $advancedFeatures
+RUN cp $advancedFeatures $HOME/.android/advancedFeatures.ini
 
 #================================================
 # noVNC Default Configurations
@@ -246,4 +257,8 @@ COPY daominah_bashrc /root/.bashrc
 COPY daominah_bash_history /root/.bash_history
 
 
+RUN updatedb
+
+
 CMD /usr/bin/supervisord --configuration /root/supervisord.conf
+#CMD bash

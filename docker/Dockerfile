@@ -244,7 +244,7 @@ ENV EMULATOR_GPU=auto
 # configure a proxy from the command line with the -http-proxy <proxy> option
 # when starting the emulator,
 # example docker run: -e 'EMULATOR_ARGS=-http-proxy http://127.0.0.1:24001'
-ENV EMULATOR_ARGS=
+ENV EMULATOR_ARGS=""
 
 RUN chmod -R +x /root/src && chmod +x /root/supervisord.conf
 

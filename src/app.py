@@ -207,7 +207,7 @@ def run():
     """Run app."""
     device = os.getenv('DEVICE', 'Nexus 5')
     logger.info('Device: {device}'.format(device=device))
-    custom_args = os.getenv('EMULATOR_ARGS', '')
+    custom_args = os.getenv('EMULATOR_ARGS', '')  # usually to set proxy
     gpuOption = os.getenv('EMULATOR_GPU', '')
     logger.info('env EMULATOR_ARGS: %s, EMULATOR_GPU: %s', custom_args, gpuOption)
 

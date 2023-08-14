@@ -4,6 +4,7 @@ set -x
 # set the following env values based on file `docker/sdkmanager_list.txt`
 # Android 6.0: android-23;google_apis;arm64-v8a
 # Android 8.1: android-27;google_apis;arm64-v8a CRASH
+# Android 11.0: android-30;google_apis;x86_64
 # Android 11.0: android-30;google_apis_playstore;x86_64
 # Android 12.0: android-31;google_apis;x86_64
 # Android 13.0: android-33;google_apis_playstore;x86_64

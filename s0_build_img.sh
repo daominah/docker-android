@@ -38,7 +38,8 @@ fi
 if [[ $isBuiltWell -eq 0 ]]; then
     echo "successfully built, pushing it to to hub.docker.com"
     # docker push ${dockerImgTag}
+else
+    echo "fail to build image ${dockerImgTag}"
 fi
-
 
 set +x
